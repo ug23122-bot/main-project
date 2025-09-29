@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Space - Find Your Dream Property</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color:  white;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .search-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box select, .search-box input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .search-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .property-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .property-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .property-card:hover .property-img img {
+            transform: scale(1.05);
+        }
+        
+        .property-type {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .property-details {
+            padding: 1.5rem;
+        }
+        
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-price span {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .property-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-location {
+            color: #666;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .property-location i {
+            margin-right: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+        
+        .feature {
+            text-align: center;
+        }
+        
+        .feature i {
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+        
+        .feature span {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .property-owner {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .owner-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+        
+        .owner-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .owner-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .owner-info p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .btn-chat {
+            background-color: var(--light);
+            color: var(--primary);
+            flex: 1;
+            margin-right: 0.5rem;
+        }
+        
+        .btn-chat:hover {
+            background-color: #e9ecef;
+        }
+        
+        .btn-call {
+            background-color: var(--success);
+            color: white;
+            flex: 1;
+            margin-left: 0.5rem;
+        }
+        
+        .btn-call:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .filter-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .filter-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+            position: relative;
+        }
+        
+        /* Glow effect for active tab */
+        .filter-tab.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(79, 195, 247, 0.7);
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(79, 195, 247, 0.5);
+            }
+            to {
+                box-shadow: 0 0 15px rgba(79, 195, 247, 0.9);
+            }
+        }
+        
+        .filter-tab:hover:not(.active) {
+            color: var(--dark);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color:  #74dcf3; 
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Chat Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+            background-color: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.received {
+            align-self: flex-start;
+            background-color: #f1f1f1;
+            color: var(--dark);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .chat-input {
+            display: flex;
+            margin-top: 1rem;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+        }
+        
+        .chat-input button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.2rem;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .chat-input button:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .filter-tabs {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+            
+            .filter-tab {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <span>Dream Space</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <select>
+                <option value="">Property Type</option>
+                <option value="apartment">Apartment</option>
+                <option value="flat">Flat</option>
+                <option value="villa">Villa</option>
+                <option value="land">Land</option>
+            </select>
+            <select>
+                <option value="">Location</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="delhi">Delhi</option>
+                <option value="hyderabad">Hyderabad</option>
+            </select>
+            <select>
+                <option value="">Budget</option>
+                <option value="50">Under ₹50 Lakhs</option>
+                <option value="100">₹50 Lakhs - ₹1 Crore</option>
+                <option value="150">₹1 Crore - ₹1.5 Crore</option>
+                <option value="200">Above ₹1.5 Crore</option>
+            </select>
+            <button class="search-btn">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Featured Properties</h2>
+        
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">All</div>
+            <div class="filter-tab" data-filter="apartment">Apartments</div>
+            <div class="filter-tab" data-filter="flat">Flats</div>
+            <div class="filter-tab" data-filter="villa">Villas</div>
+            <div class="filter-tab" data-filter="land">Lands</div>
+        </div>
+        
+        <div class="property-grid">
+            <!-- Property 1 -->
+            <div class="property-card" data-type="apartment">
+                <div class="property-img">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Modern Apartment">
+                    <span class="property-type">Apartment</span>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">₹75,00,000 <span>(Negotiable)</span></div>
+                    <h3 class="property-title">Luxury Apartment in Koramangala</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Koramangala, Bangalore
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <i class="fas fa-bed"></i>
+                            <span>3 Beds</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bath"></i>
+                            <span>2 Baths</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-vector-square"></i>
+                            <span>1800 sq.ft</span>
+                        </div>
+                    </div>
+                    <div class="property-owner">
+                        <div class="owner-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Owner">
+                        </div>
+                        <div class="owner-info">
+                            <h4>Rajesh Kumar</h4>
+                            <p>Owner</p>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-chat" onclick="openChatModal()">
+                            <i class="fas fa-comment-dots"></i> Chat
+                        </button>
+                        <button class="btn btn-call">
+                            <i class="fas fa-phone"></i> Call
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property 2 -->
+            <div class="property-card" data-type="villa">
+                <div class="property-img">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Modern Villa">
+                    <span class="property-type">Villa</span>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">₹1,20,00,000</div>
+                    <h3 class="property-title">Beautiful Villa in Whitefield</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Whitefield, Bangalore
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <i class="fas fa-bed"></i>
+                            <span>4 Beds</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bath"></i>
+                            <span>3 Baths</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-vector-square"></i>
+                            <span>3200 sq.ft</span>
+                        </div>
+                    </div>
+                    <div class="property-owner">
+                        <div class="owner-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Owner">
+                        </div>
+                        <div class="owner-info">
+                            <h4>Priya Sharma</h4>
+                            <p>Owner</p>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-chat" onclick="openChatModal()">
+                            <i class="fas fa-comment-dots"></i> Chat
+                        </button>
+                        <button class="btn btn-call">
+                            <i class="fas fa-phone"></i> Call
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property 3 -->
+            <div class="property-card" data-type="flat">
+                <div class="property-img">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Modern Flat">
+                    <span class="property-type">Flat</span>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">₹55,00,000</div>
+                    <h3 class="property-title">Cozy 2BHK Flat in HSR Layout</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        HSR Layout, Bangalore
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <i class="fas fa-bed"></i>
+                            <span>2 Beds</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bath"></i>
+                            <span>2 Baths</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-vector-square"></i>
+                            <span>1200 sq.ft</span>
+                        </div>
+                    </div>
+                    <div class="property-owner">
+                        <div class="owner-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Owner">
+                        </div>
+                        <div class="owner-info">
+                            <h4>Vikram Patel</h4>
+                            <p>Agent</p>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-chat" onclick="openChatModal()">
+                            <i class="fas fa-comment-dots"></i> Chat
+                        </button>
+                        <button class="btn btn-call">
+                            <i class="fas fa-phone"></i> Call
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property 4 -->
+            <div class="property-card" data-type="land">
+                <div class="property-img">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Land Property">
+                    <span class="property-type">Land</span>
+                </div>
+                <div class="property-details">
+                    <div class="property-price">₹95,00,000</div>
+                    <h3 class="property-title">Premium Plot in Sarjapur Road</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Sarjapur Road, Bangalore
+                    </div>
+                    <div class="property-features">
+                        <div class="feature">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>2400 sq.ft</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-tint"></i>
+                            <span>Water</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>Electricity</span>
+                        </div>
+                    </div>
+                    <div class="property-owner">
+                        <div class="owner-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Owner">
+                        </div>
+                        <div class="owner-info">
+                            <h4>Ananya Reddy</h4>
+                            <p>Owner</p>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-chat" onclick="openChatModal()">
+                            <i class="fas fa-comment-dots"></i> Chat
+                        </button>
+                        <button class="btn btn-call">
+                            <i class="fas fa-phone"></i> Call
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="modal" id="chatModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chat with Owner</h3>
+                <button class="close-modal" onclick="closeChatModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="chat-messages">
+                    <div class="message received">
+                        Hello! I'm interested in your property. Is it still available?
+                    </div>
+                    <div class="message sent">
+                        Hi! Yes, the property is still available. When would you like to visit?
+                    </div>
+                    <div class="message received">
+                        Can we schedule a visit this weekend?
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type your message...">
+                    <button><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Dream Space</h3>
+                <p>Find your dream property with our curated selection of homes, apartments, and lands across India's top cities.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Properties</a></li>
+                    <li><a href="#">Agents</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Property Types</h3>
+                <ul>
+                    <li><a href="#">Apartments</a></li>
+                    <li><a href="#">Flats</a></li>
+                    <li><a href="#">Villas</a></li>
+                    <li><a href="#">Lands</a></li>
+                    <li><a href="#">Commercial</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Bangalore, India</li>
+                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                    <li><i class="fas fa-envelope"></i> info@dreamspace.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Dream Space. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Chat Modal Functions
+        function openChatModal() {
+            document.getElementById('chatModal').style.display = 'flex';
+        }
+        
+        function closeChatModal() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('chatModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Filter tabs functionality
+        const tabs = document.querySelectorAll('.filter-tab');
+        const propertyCards = document.querySelectorAll('.property-card');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Get filter value
+                const filter = tab.getAttribute('data-filter');
+                
+                // Filter properties
+                propertyCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        if (card.getAttribute('data-type') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Call button functionality
+        const callButtons = document.querySelectorAll('.btn-call');
+        callButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Connecting you to the owner/agent...');
+                // In a real app, this would initiate a phone call
+            });
+        });
+        
+        // Chat input functionality
+        const chatInput = document.querySelector('.chat-input input');
+        const chatSendBtn = document.querySelector('.chat-input button');
+        
+        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                const messagesContainer = document.querySelector('.chat-messages');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message sent';
+                newMessage.textContent = message;
+                messagesContainer.appendChild(newMessage);
+                chatInput.value = '';
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Simulate reply after 1 second
+                setTimeout(() => {
+                    const replies = [
+                        "Yes, the property is available for viewing.",
+                        "The price is negotiable within 5-10%.",
+                        "We can schedule a visit this weekend.",
+                        "The property has all necessary approvals.",
+                        "Would you like more details about the neighborhood?"
+                    ];
+                    const reply = replies[Math.floor(Math.random() * replies.length)];
+                    const replyMessage = document.createElement('div');
+                    replyMessage.className = 'message received';
+                    replyMessage.textContent = reply;
+                    messagesContainer.appendChild(replyMessage);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>

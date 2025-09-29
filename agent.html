@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent & Worker Profiles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeInScale 0.3s ease-out;
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+        .close-button:hover {
+            color: #ef4444;
+        }
+        .worker-card {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .worker-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-6 md:p-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-4">Construction Crew Profiles</h1>
+        <p class="text-lg text-center text-gray-500 mb-12">Find the right professional for your project.</p>
+
+        <!-- Agent Section -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-12 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
+            <div class="flex-shrink-0">
+                <img src="https://placehold.co/150x150/805ad5/ffffff?text=AGENT" alt="Agent Photo" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-purple-500 shadow-md">
+            </div>
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl font-bold text-gray-900">Johnathan Doe</h2>
+                <p class="text-gray-600 mt-1 text-lg">Lead Construction Agent</p>
+                <div class="mt-4 space-y-2">
+                    <p class="text-lg"><i class="fas fa-phone-alt text-purple-500 mr-2"></i>Contact: <span class="font-semibold">98765 43210</span></p>
+                    <p class="text-lg"><i class="fas fa-star text-yellow-400 mr-2"></i>Ratings: <span class="font-semibold">4.8/5</span></p>
+                    <p class="text-lg"><i class="fas fa-dollar-sign text-green-500 mr-2"></i>Daily Salary: <span class="font-semibold">₹1500</span></p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-gray-300 my-10">
+
+        <!-- Workers Section -->
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Available Workers</h2>
+        <div id="worker-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Worker profiles will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Worker Details Modal -->
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal" class="close-button">&times;</button>
+            <div id="modal-details" class="space-y-4">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const workerData = [
+                {
+                    name: "Alice Johnson",
+                    profession: "Plumber",
+                    image: "https://placehold.co/150x150/93c5fd/ffffff?text=Plumber",
+                    ratings: "4.5/5",
+                    salary: "₹800",
+                    details: "Alice is a certified plumber with over 10 years of experience in residential and commercial projects. She specializes in pipe installation and leak detection."
+                },
+                {
+                    name: "Bob Williams",
+                    profession: "Electrician",
+                    image: "https://placehold.co/150x150/fca5a5/ffffff?text=Electrician",
+                    ratings: "4.9/5",
+                    salary: "₹1000",
+                    details: "Bob is a master electrician known for his precision and safety. He has successfully completed complex wiring for new homes and large-scale industrial sites."
+                },
+                {
+                    name: "Charlie Brown",
+                    profession: "Carpenter",
+                    image: "https://placehold.co/150x150/bef264/ffffff?text=Carpenter",
+                    ratings: "4.7/5",
+                    salary: "₹950",
+                    details: "Charlie is a skilled carpenter with a passion for woodworking. His craftsmanship ranges from framing and roofing to custom cabinetry and furniture making."
+                },
+                {
+                    name: "Diana Ross",
+                    profession: "Welder",
+                    image: "https://placehold.co/150x150/a8a29e/ffffff?text=Welder",
+                    ratings: "4.2/5",
+                    salary: "₹900",
+                    details: "Diana is an experienced welder certified in various welding techniques. She works on structural steel, metal fabrication, and on-site repairs."
+                },
+                {
+                    name: "Ethan Hunt",
+                    profession: "Mason",
+                    image: "https://placehold.co/150x150/d1d5db/ffffff?text=Mason",
+                    ratings: "4.6/5",
+                    salary: "₹850",
+                    details: "Ethan is a dedicated mason with a strong portfolio of brickwork, stonework, and concrete projects. His attention to detail ensures a sturdy and beautiful finish."
+                },
+                {
+                    name: "Fiona Gale",
+                    profession: "Painter",
+                    image: "https://placehold.co/150x150/d8b4fe/ffffff?text=Painter",
+                    ratings: "4.8/5",
+                    salary: "₹750",
+                    details: "Fiona is a talented painter who brings color and life to any space. She has extensive experience with both interior and exterior painting for residential properties."
+                }
+            ];
+
+            const workerGrid = document.getElementById('worker-grid');
+            const modal = document.getElementById('modal');
+            const modalDetails = document.getElementById('modal-details');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            // Function to render worker cards
+            function renderWorkerCards() {
+                workerGrid.innerHTML = '';
+                workerData.forEach(worker => {
+                    const card = document.createElement('div');
+                    card.className = 'worker-card bg-white p-6 rounded-xl shadow-lg text-center flex flex-col items-center';
+                    card.innerHTML = `
+                        <img src="${worker.image}" alt="${worker.name}" class="w-24 h-24 rounded-full object-cover mb-4 border-2 border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900">${worker.name}</h3>
+                        <p class="text-gray-500 font-medium mt-1">${worker.profession}</p>
+                        <div class="mt-4 text-left w-full space-y-1">
+                            <p class="text-gray-700"><i class="fas fa-star text-yellow-400 mr-2"></i>Ratings: <span class="font-medium">${worker.ratings}</span></p>
+                            <p class="text-gray-700"><i class="fas fa-dollar-sign text-green-500 mr-2"></i>Daily Salary: <span class="font-medium">${worker.salary}</span></p>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => showWorkerDetails(worker));
+                    workerGrid.appendChild(card);
+                });
+            }
+
+            // Function to show worker details in a modal
+            function showWorkerDetails(worker) {
+                modalDetails.innerHTML = `
+                    <div class="text-center mb-4">
+                        <img src="${worker.image}" alt="${worker.name}" class="w-32 h-32 rounded-full object-cover mx-auto mb-4 border-4 border-purple-500 shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-900">${worker.name}</h2>
+                        <p class="text-gray-500 text-lg">${worker.profession}</p>
+                    </div>
+                    <div class="text-left space-y-3">
+                        <p class="text-gray-700"><i class="fas fa-star text-yellow-400 mr-2"></i><span class="font-semibold">Ratings:</span> ${worker.ratings}</p>
+                        <p class="text-gray-700"><i class="fas fa-dollar-sign text-green-500 mr-2"></i><span class="font-semibold">Daily Salary:</span> ${worker.salary}</p>
+                        <div class="text-gray-700"><span class="font-semibold">Full Details:</span>
+                            <p class="mt-2 text-gray-600 leading-relaxed">${worker.details}</p>
+                        </div>
+                    </div>
+                `;
+                modal.style.display = 'flex';
+            }
+
+            // Event listener to close the modal
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside the content
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Initial render
+            renderWorkerCards();
+        });
+    </script>
+</body>
+</html>

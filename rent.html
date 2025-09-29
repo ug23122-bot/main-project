@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Space - Property Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* Custom styling for icons */
+        .icon {
+            fill: #6b7280;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <!-- Search & Filter Section -->
+    <div class="bg-white rounded-3xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Find Your Dream Space</h2>
+        <form id="filter-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            <div>
+                <label for="location-select" class="block text-gray-700 font-medium mb-2">Location</label>
+                <select id="location-select" class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="all">All Districts</option>
+                    <option value="Ariyalur">Ariyalur</option>
+                    <option value="Chengalpattu">Chengalpattu</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Coimbatore">Coimbatore</option>
+                    <option value="Cuddalore">Cuddalore</option>
+                    <option value="Dharmapuri">Dharmapuri</option>
+                    <option value="Dindigul">Dindigul</option>
+                    <option value="Erode">Erode</option>
+                    <option value="Kallakurichi">Kallakurichi</option>
+                    <option value="Kancheepuram">Kancheepuram</option>
+                    <option value="Kanyakumari">Kanyakumari</option>
+                    <option value="Karur">Karur</option>
+                    <option value="Krishnagiri">Krishnagiri</option>
+                    <option value="Madurai">Madurai</option>
+                    <option value="Mayiladuthurai">Mayiladuthurai</option>
+                    <option value="Nagapattinam">Nagapattinam</option>
+                    <option value="Namakkal">Namakkal</option>
+                    <option value="The Nilgiris">The Nilgiris</option>
+                    <option value="Perambalur">Perambalur</option>
+                    <option value="Pudukkottai">Pudukkottai</option>
+                    <option value="Ramanathapuram">Ramanathapuram</option>
+                    <option value="Ranipet">Ranipet</option>
+                    <option value="Salem">Salem</option>
+                    <option value="Sivaganga">Sivaganga</option>
+                    <option value="Tenkasi">Tenkasi</option>
+                    <option value="Thanjavur">Thanjavur</option>
+                    <option value="Theni">Theni</option>
+                    <option value="Thoothukudi">Thoothukudi</option>
+                    <option value="Tiruchirappalli">Tiruchirappalli</option>
+                    <option value="Tirunelveli">Tirunelveli</option>
+                    <option value="Tirupathur">Tirupathur</option>
+                    <option value="Tiruppur">Tiruppur</option>
+                    <option value="Tiruvallur">Tiruvallur</option>
+                    <option value="Tiruvannamalai">Tiruvannamalai</option>
+                    <option value="Tiruvarur">Tiruvarur</option>
+                    <option value="Vellore">Vellore</option>
+                    <option value="Viluppuram">Viluppuram</option>
+                    <option value="Virudhunagar">Virudhunagar</option>
+                </select>
+            </div>
+            <div>
+                <label for="type-select" class="block text-gray-700 font-medium mb-2">Home Type</label>
+                <select id="type-select" class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="all">All Types</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Loft">Loft</option>
+                    <option value="Bungalow">bungalow</option>
+					<option value="Farmhouse">Farmhouse</option>
+					<option value="Cottage">cottage</option>
+					<option value="villa">villa</option>
+                </select>
+            </div>
+            <div>
+                <label for="price-select" class="block text-gray-700 font-medium mb-2">Max Rent</label>
+                <select id="price-select" class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="10000000">Any Price</option>
+                    <option value="10000">₹10,000</option>
+                    <option value="20000">₹20,000</option>
+                    <option value="30000">₹30,000</option>
+                    <option value="50000">₹50,000</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition duration-300">
+                Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Property Results Container -->
+    <div id="property-results-container" class="max-w-4xl mx-auto space-y-8">
+        <!-- Property cards will be dynamically inserted here by JavaScript -->
+        <p id="no-results" class="text-center text-gray-500 text-lg hidden">No properties match your search criteria. Please adjust your filters.</p>
+    </div>
+
+    <script>
+        // Array of property data
+        const propertiesData = [
+            {
+                id: 1,
+                title: "Modern City Apartment",
+                address: "123 Anna Salai, Chennai, Tamil Nadu",
+                neighborhood: "A vibrant neighborhood with easy access to shops and IT parks.",
+                description: "This stunning apartment offers a spacious living space with modern amenities and a great view of the city. Perfect for professionals seeking a comfortable urban lifestyle.",
+                monthlyRent: 45000,
+                homeType: "Apartment",
+                location: "Chennai",
+                size: "1,400 sq. ft.",
+                bedrooms: "2",
+                bathrooms: "2",
+                furnishing: "Semi-furnished",
+                amenities: ["In-unit laundry", "Dedicated parking spot", "Central air conditioning", "Building gym access"],
+                contact: { name: "Anitha Sharma", email: "a.sharma@example.com", phone: "(+91) 98765-43210" },
+                imageUrl: "https://placehold.co/800x600/1e293b/cbd5e1?text=Modern+Apartment"
+            },
+            {
+                id: 2,
+                title: "Cozy 1-Bedroom Apartment",
+                address: "456 Main Road, Coimbatore, Tamil Nadu",
+                neighborhood: "A quiet, tree-lined street close to local cafes and public transport.",
+                description: "A bright and airy one-bedroom apartment featuring modern kitchen with all the essential appliances. Ideal for individuals or couples.",
+                monthlyRent: 18000,
+                homeType: "Apartment",
+                location: "Coimbatore",
+                size: "750 sq. ft.",
+                bedrooms: "1",
+                bathrooms: "1",
+                furnishing: "Unfurnished",
+                amenities: ["In-unit washer and dryer", "Dedicated parking spot", "Shared garden access", "Pet-friendly"],
+                contact: { name: "Arjun Singh", email: "a.singh@example.com", phone: "(+91) 98765-12345" },
+                imageUrl: "https://placehold.co/800x600/6b7280/F3F4F6?text=Cozy+Apartment"
+            },
+            {
+                id: 3,
+                title: "Spacious Family House",
+                address: "789 Gandhi Nagar, Madurai, Tamil Nadu",
+                neighborhood: "A family-friendly community with excellent schools and parks.",
+                description: "This charming house boasts a large backyard, a modern kitchen, and a finished basement. Perfect for a growing family.",
+                monthlyRent: 25000,
+                homeType: "House",
+                location: "Madurai",
+                size: "2,200 sq. ft.",
+                bedrooms: "4",
+                bathrooms: "3",
+                furnishing: "Unfurnished",
+                amenities: ["Large backyard", "Two-car garage", "Central heating", "Fireplace", "Near public park"],
+                contact: { name: "Priya Menon", email: "p.menon@example.com", phone: "(+91) 98765-55555" },
+                imageUrl: "https://placehold.co/800x600/374151/D1D5DB?text=Family+House"
+            },
+            {
+                id: 4,
+                title: "Compact Studio Apartment",
+                address: "202 Aravindhan Street, Tiruchirappalli, Tamil Nadu",
+                neighborhood: "A quiet residential area, perfect for students or young professionals.",
+                description: "An efficient and modern studio apartment with everything you need in a compact, stylish package. Features an integrated living and sleeping space.",
+                monthlyRent: 12000,
+                homeType: "Apartment",
+                location: "Tiruchirappalli",
+                size: "450 sq. ft.",
+                bedrooms: "Studio",
+                bathrooms: "1",
+                furnishing: "Partially Furnished",
+                amenities: ["Shared laundry room", "Street parking", "Close to public transit"],
+                contact: { name: "Vishnu Rajan", email: "v.rajan@example.com", phone: "(+91) 98765-44444" },
+                imageUrl: "https://placehold.co/800x600/4B5563/E5E7EB?text=Studio+Apartment"
+            }
+        ];
+
+        const filterForm = document.getElementById('filter-form');
+        const locationSelect = document.getElementById('location-select');
+        const typeSelect = document.getElementById('type-select');
+        const priceSelect = document.getElementById('price-select');
+        const resultsContainer = document.getElementById('property-results-container');
+        const noResultsMessage = document.getElementById('no-results');
+
+        // Function to render a single property card
+        function renderPropertyCard(property) {
+            const card = document.createElement('div');
+            card.className = "bg-wh
