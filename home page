@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Space - Find Your Perfect Property</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5; /* Lighter, softer background */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #ffffff; /* Pure white for a clean look */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            color: #2c3e50; /* Dark blue for strong branding */
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #4a90e2; /* A more vibrant blue */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555; /* Slightly softer link color */
+            font-weight: 500;
+            transition: color 0.3s ease-in-out; /* Smooth transition */
+        }
+
+        .nav-links a:hover {
+            color: #4a90e2; /* Vibrant blue on hover */
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem; /* Slightly larger padding */
+            border-radius: 25px; /* More rounded buttons */
+            font-weight: 600; /* Bolder text */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none; /* Ensure links look like buttons */
+            display: inline-block; /* For proper padding on links */
+            text-align: center;
+        }
+
+        .btn-outline {
+            border: 2px solid #4a90e2; /* Vibrant blue border */
+            color: #4a90e2;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: #4a90e2;
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); /* Subtle shadow on hover */
+        }
+
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); /* Initial shadow */
+        }
+
+        .btn-primary:hover {
+            background-color: #3a7bd5; /* Slightly darker blue on hover */
+            transform: translateY(-3px); /* More pronounced lift effect */
+            box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4); /* Enhanced shadow on hover */
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 550px; /* Slightly taller hero */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden; /* Ensure no overflow from pseudo-elements */
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Darker overlay for better text readability */
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 900px; /* Wider content area */
+            padding: 0 2rem;
+            z-index: 2; /* Bring content above overlay */
+        }
+
+        .hero h2 {
+            font-size: 3.2rem; /* Larger heading */
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+        }
+
+        .hero p {
+            font-size: 1.3rem; /* Larger paragraph text */
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px; /* More rounded search bar */
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 1.2rem; /* More padding */
+            border: none;
+            outline: none;
+            font-size: 1.1rem; /* Larger font */
+            color: #333;
+        }
+
+        .search-bar button {
+            padding: 0 2.5rem; /* More padding */
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 1.1rem;
+        }
+
+        .search-bar button:hover {
+            background-color: #3a7bd5;
+            transform: scale(1.02); /* Slight scale effect on hover */
+        }
+
+        /* Container & Sections */
+        .container {
+            max-width: 1400px;
+            margin: 4rem auto; /* More vertical margin */
+            padding: 0 5%;
+        }
+
+        .section-title {
+            margin-bottom: 2.5rem; /* More margin */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e0e0e0; /* Subtle separator */
+            padding-bottom: 1rem;
+        }
+
+        .section-title h3 {
+            font-size: 2.2rem; /* Larger heading */
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .section-title a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .section-title a:hover {
+            color: #3a7bd5;
+        }
+
+        /* Property Grid & Cards */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Slightly wider min-width */
+            gap: 2.5rem; /* More gap */
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative; /* For badge positioning */
+        }
+
+        .property-card:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+        }
+
+        .property-image {
+            height: 220px; /* Slightly taller image area */
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.08); /* More zoom effect */
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 1.2rem; /* Adjusted position */
+            right: 1.2rem; /* Adjusted position */
+            background-color: #2ecc71; /* Green for "For Sale" */
+            color: white;
+            padding: 0.4rem 0.8rem; /* More padding */
+            border-radius: 5px; /* Slightly more rounded */
+            font-size: 0.9rem; /* Slightly larger font */
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .property-details {
+            padding: 1.8rem; /* More padding */
+        }
+
+        .property-price {
+            font-size: 1.6rem; /* Larger price font */
+            font-weight: 700;
+            color: #4a90e2; /* Vibrant blue for price */
+            margin-bottom: 0.8rem;
+        }
+
+        .property-address {
+            color: #7f8c8d;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .property-features {
+            display: flex;
+            flex-wrap: wrap; /* Allow features to wrap on smaller screens */
+            gap: 1rem 2rem; /* Row and column gap */
+            margin-top: 1.5rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            color: #666; /* Softer feature text color */
+            font-size: 0.9rem;
+        }
+
+        .feature i {
+            margin-right: 0.6rem;
+            color: #4a90e2;
+            font-size: 1.1rem; /* Slightly larger icons */
+        }
+
+        .property-type {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background-color: #e8f4fc; /* Light blue background */
+            color: #4a90e2;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50; /* Dark blue-grey for footer */
+            color: white;
+            padding: 4rem 5%; /* More padding */
+            margin-top: 5rem; /* More margin */
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Slightly larger min-width */
+            gap: 3rem; /* More gap */
+        }
+
+        .footer-column h4 {
+            margin-bottom: 1.8rem;
+            font-size: 1.3rem; /* Larger heading */
+            color: #f8f9fa; /* Off-white for headings */
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 1rem; /* More spacing */
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: #4a90e2; /* Vibrant blue on hover */
+        }
+
+        .footer-column p {
+            color: #bdc3c7;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer-column ul li i {
+            margin-right: 0.8rem;
+            color: #4a90e2; /* Vibrant blue icons */
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Modal for property details */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px; /* Add some padding for smaller screens */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2rem auto;
+            max-width: 950px; /* Slightly wider modal */
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden;
+            animation: modalFadeIn 0.4s ease-out; /* Slower, smoother animation */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.6); /* Darker close button */
+            color: white;
+            width: 35px; /* Larger close button */
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.5rem; /* Larger 'x' */
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-property-images {
+            height: 450px; /* Taller image */
+            overflow: hidden;
+        }
+
+        .modal-property-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 2.5rem; /* More padding */
+        }
+
+        .modal-body h2 {
+            font-size: 2.2rem; /* Larger heading */
+            margin-bottom: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .modal-price {
+            font-size: 1.8rem; /* Larger price */
+            font-weight: 700;
+            color: #4a90e2;
+            margin-bottom: 1.2rem;
+        }
+
+        .modal-address {
+            color: #7f8c8d;
+            margin-bottom: 1.8rem;
+            font-size: 1.15rem;
+        }
+
+        .modal-description {
+            margin-bottom: 2.5rem;
+            line-height: 1.8; /* More readable line height */
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .modal-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Adjusted grid for features */
+            gap: 1.8rem; /* More gap */
+            margin-bottom: 2.5rem;
+        }
+
+        .modal-feature {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .modal-feature i {
+            margin-right: 0.8rem;
+            color: #4a90e2;
+            font-size: 1.3rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap */
+            gap: 1.5rem; /* More gap */
+            margin-top: 2.5rem;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem; /* Larger buttons */
+            font-size: 1.1rem;
+            min-width: 180px; /* Ensure buttons have a minimum width */
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+            }
+
+            .hero {
+                height: 450px;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+                border-radius: 5px;
+            }
+
+            .search-bar input {
+                padding: 1rem;
+            }
+
+            .search-bar button {
+                padding: 1rem;
+                border-radius: 0 0 5px 5px; /* Rounded bottom corners */
+            }
+
+            .container {
+                margin: 3rem auto;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+                padding-bottom: 0.8rem;
+            }
+
+            .section-title h3 {
+                font-size: 1.8rem;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr; /* Single column on small screens */
+            }
+
+            .property-card {
+                margin: 0 auto; /* Center cards */
+                max-width: 400px; /* Max width for single column cards */
+            }
+
+            .modal-content {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+            }
+
+            .modal-property-images {
+                height: 300px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-body h2 {
+                font-size: 1.6rem;
+            }
+
+            .modal-price {
+                font-size: 1.4rem;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-large {
+                width: 100%; /* Full width buttons */
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-column ul {
+                padding-left: 0;
+            }
+
+            .footer-column ul li {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Dream <span style="color: #4a90e2;">Space</span></h1>
+            </div>
+            <div class="nav-links">
+			    <a href="buy.html" class="btn btn-outline">buy</a>
+                <a href="rent.html" class="btn btn-outline">Rent</a>
+                <a href="sell.html" class="btn btn-outline">Sell</a>
+                <a href="modf.html" class="btn btn-outline">modf</a>		
+                <a href="Agent.html" class="btn btn-outline">Agent</a>				
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Find Your Dream Property</h2>
+            <p>Discover the perfect home or land that matches your lifestyle</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Search by location, property type, or price...">
+                <button><i class="fas fa-search"></i> Search</button>
+            </div>
+        </section>
+
+    <div class="container">
+        <div class="section-title">
+            <h3>Latest Homes</h3>
+            <a href="#">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="properties-grid" id="homes-grid">
+            <!-- Homes will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-title">
+            <h3>Available Land</h3>
+            <a href="#">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="properties-grid" id="land-grid">
+            <!-- Land properties will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Dream Space</h4>
+                <p>Your trusted partner in finding the perfect property for your needs.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>no.10 vishnu building,vivekananda college,tiruvedakam west</li>
+                    <li><i class="fas fa-phone"></i>7010209021,7904901083</li>
+                    <li><i class="fas fa-envelope"></i>143shylesh@gmail.com & arivandvjam@gmail.com/li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Dream Space. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Property Details Modal -->
+    <div class="modal" id="propertyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" id="modalClose">&times;</span>
+                <div class="modal-property-images">
+                    <img src="" alt="Property Image" id="modalMainImage">
+                </div>
+            </div>
+            <div class="modal-body">
+                <span class="property-type" id="modalPropertyType"></span>
+                <h2 id="modalTitle"></h2>
+                <div class="modal-price" id="modalPrice"></div>
+                <div class="modal-address" id="modalAddress"></div>
+                
+                <div class="modal-features">
+                    <div class="modal-feature">
+                        <i class="fas fa-bed"></i>
+                        <span id="modalBedrooms"></span>
+                    </div>
+                    <div class="modal-feature">
+                        <i class="fas fa-bath"></i>
+                        <span id="modalBathrooms"></span>
+                    </div>
+                    <div class="modal-feature">
+                        <i class="fas fa-ruler-combined"></i>
+                        <span id="modalArea"></span>
+                    </div>
+                    <div class="modal-feature">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="modalYearBuilt"></span>
+                    </div>
+                </div>
+                
+                <h3>Description</h3>
+                <p class="modal-description" id="modalDescription"></p>
+                
+                <h3>Additional Details</h3>
+                <div class="modal-features">
+                    <div class="modal-feature">
+                        <i class="fas fa-warehouse"></i>
+                        <span id="modalGarage"></span>
+                    </div>
+                    <div class="modal-feature">
+                        <i class="fas fa-layer-group"></i>
+                        <span id="modalStories"></span>
+                    </div>
+                    <div class="modal-feature">
+                        <i class="fas fa-home"></i>
+                        <span id="modalType"></span>
+                    </div>
+                    <div class="modal-feature">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span id="modalLotSize"></span>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-primary btn-large"><i class="fas fa-phone"></i> Contact Agent</button>
+                    <button class="btn btn-outline btn-large"><i class="fas fa-heart"></i> Save Property</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample property data (in a real app, this would come from an API)
+        const properties = {
+            homes: [
+                {
+                    id: 1,
+                    title: "Modern Family Home",
+                    price: "₹2,90,50,000", // Converted from $350,000 (approx 1 USD = 83 INR)
+                    rawPrice: 29050000,
+                    address: "123 Dream Street, Dream City",
+                    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    type: "For Sale",
+                    bedrooms: "3 Bedrooms",
+                    bathrooms: "2 Bathrooms",
+                    area: "1,800 sq ft",
+                    description: "Beautiful modern family home with open floor plan, spacious kitchen, and large backyard. Perfect for families looking for comfort and style.",
+                    yearBuilt: "Built in 2015",
+                    garage: "2 Car Garage",
+                    stories: "2 Stories",
+                    homeType: "Single Family",
+                    lotSize: "0.25 Acres"
+                },
+                {
+                    id: 2,
+                    title: "Luxury Downtown Condo",
+                    price: "₹4,56,50,000", // Converted from $550,000
+                    rawPrice: 45650000,
+                    address: "456 Urban Ave, Dream City",
+                    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    type: "For Sale",
+                    bedrooms: "2 Bedrooms",
+                    bathrooms: "2.5 Bathrooms",
+                    area: "1,500 sq ft",
+                    description: "Luxury condo in the heart of downtown with amazing city views. Features high-end finishes, smart home technology, and access to rooftop pool.",
+                    yearBuilt: "Built in 2018",
+                    garage: "1 Parking Space",
+                    stories: "24th Floor",
+                    homeType: "Condo",
+                    lotSize: "N/A"
+                },
+ 
+            ],
+            land: [
+                {
+                    id: 101,
+                    title: "Waterfront Property",
+                    price: "₹1,24,50,000", // Converted from $150,000
+                    rawPrice: 12450000,
+                    address: "100 Lakeview Rd, Dream County",
+                    image: "https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    type: "Land for Sale",
+                    area: "5 Acres",
+                    description: "Beautiful waterfront property with 300 feet of lake frontage. Perfect for building your dream home or vacation retreat.",
+                    zoning: "Residential",
+                    utilities: "Available at Road",
+                    terrain: "Gently Sloping",
+                    access: "Paved Road Access"
+                },
+                {
+                    id: 102,
+                    title: "Downtown Development Lot",
+                    price: "₹3,73,50,000", // Converted from $450,000
+                    rawPrice: 37350000,
+                    address: "200 Commerce St, Dream City",
+                    image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                    type: "Commercial Land",
+                    area: "0.75 Acres",
+                    description: "Prime downtown development opportunity in the city's fastest growing district. Zoned for mixed-use development.",
+                    zoning: "Commercial",
+                    utilities: "All Utilities Available",
+                    terrain: "Flat",
+                    access: "Main Street Frontage"
+                },
+               
+            ]
+        };
+
+        // Function to render property cards
+        function renderProperties() {
+            const homesGrid = document.getElementById('homes-grid');
+            const landGrid = document.getElementById('land-grid');
+
+            // Clear existing content
+            homesGrid.innerHTML = '';
+            landGrid.innerHTML = '';
+
+            // Render homes
+            properties.homes.forEach(home => {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                card.innerHTML = `
+                    <div class="property-image">
+                        <img src="${home.image}" alt="${home.title}">
+                        <span class="property-badge">${home.type}</span>
+                    </div>
+                    <div class="property-details">
+                        <span class="property-type">Home</span>
+                        <div class="property-price">${home.price}</div>
+                        <div class="property-address">${home.address}</div>
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-bed"></i>
+                                <span>${home.bedrooms}</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bath"></i>
+                                <span>${home.bathrooms}</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>${home.area}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(home));
+                homesGrid.appendChild(card);
+            });
+
+            // Render land
+            properties.land.forEach(land => {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                card.innerHTML = `
+                    <div class="property-image">
+                        <img src="${land.image}" alt="${land.title}">
+                        <span class="property-badge">${land.type}</span>
+                    </div>
+                    <div class="property-details">
+                        <span class="property-type">Land</span>
+                        <div class="property-price">${land.price}</div>
+                        <div class="property-address">${land.address}</div>
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>${land.area}</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span>${land.zoning}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(land));
+                landGrid.appendChild(card);
+            });
+        }
+
+        // Modal functionality
+        const modal = document.getElementById('propertyModal');
+        const modalClose = document.getElementById('modalClose');
+
+        function openModal(property) {
+            document.getElementById('modalMainImage').src = property.image;
+            document.getElementById('modalTitle').textContent = property.title;
+            document.getElementById('modalPrice').textContent = property.price;
+            document.getElementById('modalAddress').textContent = property.address;
+            document.getElementById('modalPropertyType').textContent = property.type;
+            document.getElementById('modalDescription').textContent = property.description;
+
+            // Set home-specific details or hide if not applicable
+            if (property.bedrooms) {
+                document.getElementById('modalBedrooms').textContent = property.bedrooms;
+                document.getElementById('modalBathrooms').textContent = property.bathrooms;
+                document.getElementById('modalArea').textContent = property.area;
+                document.getElementById('modalYearBuilt').textContent = property.yearBuilt;
+                document.getElementById('modalGarage').textContent = property.garage;
+                document.getElementById('modalStories').textContent = property.stories;
+                document.getElementById('modalType').textContent = property.homeType;
+                document.getElementById('modalLotSize').textContent = property.lotSize;
+            } else {
+                // For land properties
+                document.getElementById('modalBedrooms').textContent = 'N/A';
+                document.getElementById('modalBathrooms').textContent = 'N/A';
+                document.getElementById('modalArea').textContent = property.area;
+                document.getElementById('modalYearBuilt').textContent = 'N/A';
+                document.getElementById('modalGarage').textContent = 'N/A';
+                document.getElementById('modalStories').textContent = 'N/A';
+                document.getElementById('modalType').textContent = property.zoning;
+                document.getElementById('modalLotSize').textContent = property.area;
+            }
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', renderProperties);
+    </script>
+</body>
+</html>
